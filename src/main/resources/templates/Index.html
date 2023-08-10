@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center text-warning">INSURANCE PLAN DASHBOARD</h3>
+            </div>
+            <div class="card-body">
+                <form class="form-control" th:action="@{./search}" method="post" th:object="${data}">
+                    <table class="table"><tr>
+                        <td><label>PlanName:</label></td>
+                        <td>
+                        <select class="form-control" th:field="*{planName}">
+                            <option value="">-select-</option>
+                            <option th:each="ob:${planList}" th:value="${ob}" th:text="${ob}"></option>
+                        </select>
+                        </td>
+                        <td>
+                        <label>PlanStaus:</label>
+                        </td>
+                        <td>
+                         <select class="form-control" th:field="*{planStatus}"> 
+                            <option value="">-select-</option>
+                            <option th:each="ob:${statusList}" th:value="${ob}" th:text="${ob}"></option>
+                        </select>
+                        <td>
+                        <label>Gender:</label>
+                        </td><td>
+                         <select class="form-control" th:field="*{gender}"> 
+                            <option value="">-select-</option>
+                            <option value="MALE">MALE</option>
+                            <option value="FEMALE">FEMALE</option>
+                        </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>StartDate:</label></td>
+                        <td>
+                        <input type="date" th:field="*{startDate}" class="form-control">
+                        </td>
+                        <td><label>EndDate:</label></td>
+                        <td>
+                        <input type="date" th:field="*{endDate}" class="form-control">
+                        </td>
+                        </tr>
+                </table>
+                <input type="submit" value="Search" class="btn btn-secondary"/>
+                </form>
+                <hr>
+                <a th:href="@{/insure/excel}" class="btn btn-info">Excel</a>
+                <a th:href="@{/insure/pdf}" class="btn btn-info">Pdf</a>
+                <hr>
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <th>PlanId</th>
+                        <th>HolderName</th>
+                        <th>Gender</th>
+                        <th>PlanName</th>
+                        <th>PlanStatus</th>
+                        <th>Amount</th>
+                        <th>StartDate</th>
+                        <th>EndDate</th>
+                    </tr>
+                    <tr th:each="ob:${dataList}">
+                     <td th:text="${ob.planId}"></td>
+                     <td th:text="${ob.holderName}"></td>
+                     <td th:text="${ob.gender}"></td>
+                     <td th:text="${ob.planName}"></td>
+                     <td th:text="${ob.planStatus}"></td>
+                     <td th:text="${ob.beneficiaryAmt}"></td>
+                     <td th:text="${ob.startDate}"></td> 
+                     <td th:text="${ob.endDate}"></td>
+                    </tr>
+                     <tr th:if="${#lists.isEmpty(dataList)}">
+
+                    <td colspan="8" style="text-align:center">No Data Available</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-footer">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
